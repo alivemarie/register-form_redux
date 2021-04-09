@@ -1,5 +1,7 @@
 import './App.css';
 import {useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
+import {signUp} from "./features/userSlice";
 
 function App() {
 
@@ -101,9 +103,23 @@ function App() {
     }
   }
 
+  const dispatch = useDispatch();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    dispatch(signUp({
+      fullname: fullname,
+      username: username,
+      email: email,
+      password: password,
+      signUpSuccess: true,
+    }))
+  }
+
   return (
     <div className='App'>
-      <form className='form' action="">
+      <form className='form' action="" onSubmit={e => handleSubmit(e)}>
         <h1>Регистрация</h1>
 
         {(fullnameTouched && fullnameError) && <div style={{color:'red'}}>{fullnameError}</div>}
